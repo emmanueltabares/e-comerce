@@ -1,0 +1,32 @@
+[
+    {
+    "id": 1,
+    "nombre": "Lapiz",
+    "descripcion": "Prueba1",
+    "codigo": 123,
+    "foto": "http://localhost",
+    "precio": 250,
+    "stock": 15
+  },
+  {
+    "id": 2,
+    "nombre": "Lapiz",
+    "descripcion": "Prueba1",
+    "codigo": 123,
+    "foto": "http://localhost",
+    "precio": 250,
+    "stock": 15
+  },
+  {
+    "id": 3,
+    "nombre": "Lapiz",
+    "descripcion": "Prueba1",
+    "codigo": 123,
+    "foto": "http://localhost",
+    "precio": 250,
+    "stock": 15
+  } 
+]
+    
+        
+    
