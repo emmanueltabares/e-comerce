@@ -1,0 +1,47 @@
+[
+	{
+		"_id": "1",
+		"title": "lapiz",
+		"description": "lapiz",
+		"price": 100,
+		"stock": 5,
+		"thumbnail": "hola",
+		"createat": "2021-09-18T18:00:27.667Z"
+	},
+	{
+		"_id": "2",
+		"title": "pruebaDesdePostman5ID",
+		"description": "pruebaDesdePostman4ID",
+		"price": 5000,
+		"stock": 5,
+		"thumbnail": "pruebaDesdePostman4ID",
+		"createat": "Date()"
+	},
+	{
+		"_id": "3",
+		"title": "mochila",
+		"description": "mochila",
+		"price": 500,
+		"stock": 15,
+		"thumbnail": "chau",
+		"createat": "2021-09-18T18:00:27.667Z"
+	},
+	{
+		"_id": "4",
+		"title": "pruebaDesdePostman4ID",
+		"description": "pruebaDesdePostman4ID",
+		"stock": 5,
+		"price": 5000,
+		"thumbnail": "pruebaDesdePostman4ID",
+		"createat": "Date()"
+	},
+	{
+		"_id": "5",
+		"title": "pruebaDesdePostman5ID",
+		"description": "pruebaDesdePostman4ID",
+		"stock": 5,
+		"price": 5000,
+		"thumbnail": "pruebaDesdePostman4ID",
+		"createat": "Date()"
+	}
+]
