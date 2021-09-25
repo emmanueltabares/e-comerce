@@ -89,6 +89,21 @@ class Producto {
       data: item,
     });
   }
+
+  async getProductsTest(req: Request, res: Response) {
+    
+    const cant  = req.params.cant ? Number(req.params.cant) : 10 ;
+    let productsTest;
+
+    for(let i = 0; i < cant; i++) {
+      productsTest = productsAPI.getProductMock(cant)
+    }
+
+      res.json({
+        msg: 'Mock',
+        data: productsTest,
+      });
+  }
 }
 
 export const productController = new Producto();
