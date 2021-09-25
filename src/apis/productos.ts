@@ -12,10 +12,10 @@ class ProductApi {
 
     constructor() {
         this.products = FactoryDAO.get(tipo)
-        this.mockProducts = [{id: 1, title: 'prueba', price: '2000', description: 'pruebaMock'}];
+        this.mockProducts = [];
     }
 
-    getProductMock(cant: number = 10): Promise<ProductI[]> {
+    async postProductMock(): Promise<ProductI[]> {
         
       const mockProduct: ProductI = {
         _id: faker.datatype.uuid(),

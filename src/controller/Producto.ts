@@ -90,19 +90,20 @@ class Producto {
     });
   }
 
-  async getProductsTest(req: Request, res: Response) {
+   async postProductsTest(req: Request, res: Response) {
     
-    const cant  = req.params.cant ? Number(req.params.cant) : 10 ;
-    let productsTest;
+    const cant  = req.params.cant ? req.params.cant : 10;
 
+    let productsTest;  
+      
     for(let i = 0; i < cant; i++) {
-      productsTest = productsAPI.getProductMock(cant)
+        productsTest = await productsAPI.postProductMock();
     }
-
-      res.json({
-        msg: 'Mock',
+    
+    res.json({
+        msg: 'Mock generado',
         data: productsTest,
-      });
+    }); 
   }
 }
 

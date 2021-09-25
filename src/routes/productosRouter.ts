@@ -13,6 +13,6 @@ router.put('/:id', checkAdmin, asyncHandler(productController.updateProducts))
 
 router.delete('/:id', checkAdmin, asyncHandler(productController.deleteProducts))
 
-router.get('/vista-test:cant?', asyncHandler(productController.getProductsTest))
+router.post('/test:cant?', asyncHandler(productController.postProductsTest))
 
 export default router;
