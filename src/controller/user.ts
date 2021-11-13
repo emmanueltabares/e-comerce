@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { userPersistance } from '../persistance/users';
 import { UserQuery, UserI } from '../interfaces/users';
+import { EmailService } from '../services/email';
 
 class User {
    
@@ -18,11 +19,14 @@ class User {
   
     async addUser(req: Request, res: Response) {
       const newUser = await userPersistance.add(req.body);
-  
+
       res.json({
         msg: 'Usuario agregado',
         data: newUser,
       });
+      
+
+
     }
   
     async updateUser(req: Request, res: Response) {

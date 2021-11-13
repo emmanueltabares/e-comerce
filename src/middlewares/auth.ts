@@ -8,6 +8,7 @@ import { Request, Response, NextFunction } from 'express';
 import { userController } from '../controller/user';
 import { userPersistance } from '../persistance/users'
 import { Logger } from '../services/logger';
+import { EmailService } from '../services/email';
 
 const admin = true;
 
@@ -71,6 +72,7 @@ const signUpFunc: VerifyFunctionWithRequest = async (
       });
     } else {
       const newUser = await userPersistance.add(req.body);
+      await EmailService.sendEmail(JSON.stringify(newUser))
       return done(null, newUser);
     }
   } catch (err) {
