@@ -1,4 +1,4 @@
-import express, { ErrorRequestHandler }  from 'express';
+import express, { ErrorRequestHandler } from 'express';
 import path from 'path';
 import * as http from 'http';
 import apiRouter from '../routes/index';
@@ -11,19 +11,19 @@ import passport from 'passport';
 const app = express();
 const PUBLIC_FOLDER_PATH = path.resolve(__dirname, '../../public');
 
-/* app.use(session({
+app.use(session({
     store: MongoStore.create({
-        mongoUrl: `mongodb+srv://${config.MONGO_ATLAS_USER}:${config.MONGO_ATLAS_PASS}@${config.MONGO_ATLAS_CLUSTER}/${config.MONGO_ATLAS_DB}?retryWrites=true&w=majority`,
+        mongoUrl: config.MONGO_SRV,
       }),
     
-      secret: "miSecretKey",
+      secret: config.SESSION_SECRET,
       resave: false,
       saveUninitialized: false,
       cookie: {
         maxAge:  60 * 1000,
       }
   })
-) */
+) 
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true}))
@@ -32,19 +32,23 @@ app.use(express.static(PUBLIC_FOLDER_PATH));
 app.get('/', (req, res) => {
     res.json({
         msg: "Bienvenido!"
-    })
+    });
 })
+
+app.set('view engine', 'pug');
+const viewsFolderPath = path.resolve(__dirname, '../views');
+app.set('views', viewsFolderPath)
 
 app.use(passport.initialize());
 app.use(passport.session());
 
 app.use('/api', apiRouter);
 
-const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
+const errorHandler: ErrorRequestHandler = (err, req, res) => {
     Logger.error(`HUBO UN ERROR ${err.message}`);
-    res.status(500).json({
+    /*  res.status(500).json({
       err: err.message,
-    });
+    }); */  
   };
 
 app.use(errorHandler);

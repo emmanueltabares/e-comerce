@@ -13,6 +13,7 @@ class Products {
     }
     async get(id?: string) {
     
+
         let products: ProductI[] = [];
         
         try {
@@ -42,12 +43,14 @@ class Products {
         }
         
     }
-    delete(id: string) {
-        throw new Error('Method not implemented.');
+    async delete(id: string) {
+        const product = await ProductModel.findByIdAndDelete(id);
+        return product;
     }
-    update(){
-        throw new Error('Method not implemented.');
-    }
+    async update(id: string, newProductData: newProductI) {
+        const updateProduct = await ProductModel.findByIdAndUpdate(id, newProductData);
+        return updateProduct
+      }
 
 }
 

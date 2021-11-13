@@ -5,7 +5,7 @@ import { validateAddProduct, validateUpdateProduct } from '../middlewares/valida
 const router = Router()
 
 router.get('/:id?', productsController.getProducts);
-router.post('/', validateAddProduct,  productsController.addProducts);
+router.post('/', validateAddProduct, productsController.addProducts);
 router.put('/id', validateUpdateProduct, productsController.updateProducts);
 router.delete('/id', productsController.deleteProducts);
 

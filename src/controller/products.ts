@@ -27,20 +27,20 @@ class Products {
       next();
      }*/
   
-    getProducts(req: Request, res: Response) {
-      const id = req.params.id;
+    async getProducts(req: Request, res: Response) {
+      const { id } = req.params;
   
       const product = id
-        ? productsPersistance.get(id)
-        : productsPersistance.get();
+        ? await productsPersistance.get(id)
+        : await productsPersistance.get();
   
       res.json({
         data: product,
       });
     }
   
-    addProducts(req: Request, res: Response) {
-      const newItem = productsPersistance.add(req.body);
+    async addProducts(req: Request, res: Response) {
+      const newItem = await productsPersistance.add(req.body);
   
       res.json({
         msg: 'producto agregado con exito',
@@ -48,18 +48,25 @@ class Products {
       });
     }
   
-    updateProducts(req: Request, res: Response) {
+    async updateProducts(req: Request, res: Response) {
+      const { id } = req.params;
+      const { body } = req.body;
+
+      const newProduct = await productsPersistance.update(id, body)
+
       res.json({
         msg: 'actualizando producto',
+        data: newProduct
       });
     }
   
-    deleteProducts(req: Request, res: Response) {
-      const id = req.params.id;
+    async deleteProducts(req: Request, res: Response) {
+      const { id } = req.params;
   
-      productsPersistance.delete(id);
+      const product = await productsPersistance.delete(id);
       res.json({
         msg: 'producto borrado',
+        data: product
       });
     }
   }
