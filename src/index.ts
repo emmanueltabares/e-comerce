@@ -34,7 +34,7 @@ function init(): any {
   connectToDB().then(() => {
     Logger.info("Connect to Database!");
     const server = Server.listen(PORT, () => {
-      Logger.info(`Server up in port ${PORT}`);
+      Logger.info(`Server up in port ${PORT} - PID WORKER ${process.pid}`);
     });
 
     server.on("error", (error) => Logger.error(`Server error: ${error}`));
