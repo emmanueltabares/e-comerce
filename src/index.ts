@@ -6,10 +6,10 @@ import os from "os";
 import cluster from "cluster";
 
 const NUM_CPUs = os.cpus().length;
-const CLUSTER = false;
+const CLUSTER_MODE = false;
 
-if (CLUSTER) {
-  if (cluster.isPrimary) {
+if (CLUSTER_MODE) {
+  if (cluster.isMaster) {
     console.log(`NUMERO DE CPUS ===> ${NUM_CPUs}`);
     console.log(`PID MASTER ${process.pid}`);
 
