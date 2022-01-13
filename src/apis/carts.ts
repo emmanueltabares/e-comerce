@@ -1,6 +1,6 @@
 import { CartFactoryDAO } from '../models/carts/carts.factory';
 import { TipoPersistencia } from '../models/carts/carts.factory';
-import { CartI } from '../interfaces/carts';
+import { CartI, CartIPopulate } from '../interfaces/carts';
 import { UserAPI } from '../apis/users';
 import { productsAPI } from '../apis/products';
 /**
@@ -19,6 +19,10 @@ class Cart {
     return this.carts.get(userId);
   }
 
+  async getCartPopulate(userId: string): Promise<CartIPopulate> {
+    return this.carts.getPopulate(userId);
+  }
+
   async createCart(userId: string): Promise<CartI> {
     const user = await UserAPI.get(userId);
 
@@ -32,7 +36,7 @@ class Cart {
   async addProduct(
     cartId: string,
     productId: string,
-    amount: number
+    amount: number,
   ): Promise<CartI> {
     const product = (await productsAPI.get(productId))[0];
 
@@ -47,7 +51,7 @@ class Cart {
     return updatedCart;
   }
 
-  async deleteProduct(cartId: string, productId: string, amount: number) {
+  async deleteProducts(cartId: string, productId: string, amount: number) {
     const product = (await productsAPI.get(productId))[0];
 
     const deleteProduct = {
@@ -57,12 +61,12 @@ class Cart {
       amount,
     };
 
-    const updatedCart = await this.carts.deleteProduct(cartId, deleteProduct);
+    const updatedCart = await this.carts.deleteProducts(cartId, deleteProduct);
     return updatedCart;
   };
 
-  async deleteCart(id: string) {
-
+  async clearCart(cartId: string) {
+    return await this.carts.clearCart(cartId);
   }
 }
 

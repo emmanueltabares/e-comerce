@@ -1,5 +1,4 @@
 import { CartsAtlasDAO } from '../carts/DAOs/mongoDAO';
-import path from 'path';
 import { Logger } from '../../services/logger';
 
 export enum TipoPersistencia {

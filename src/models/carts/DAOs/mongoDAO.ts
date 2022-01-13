@@ -1,11 +1,24 @@
-import { CartI, ProductCart, CartBaseClass } from "../../../interfaces/carts";
+import { CartI, ProductCart, CartBaseClass, CartIPopulate } from "../../../interfaces/carts";
 import { CartModel } from "../../schemas/cart";
 
 export class CartsAtlasDAO implements CartBaseClass {
+  
   async get(userId: string): Promise<CartI> {
-    const result = await CartModel.findOne({ userId });
+    const result = await CartModel.findOne({ userId } );
     if (!result) throw new Error("id not found");
     return result;
+  }
+
+  async getPopulate(userId: string): Promise<CartIPopulate> {
+    const cart: any = await CartModel
+      .findOne({ userId })
+      .populate('products.productId');
+
+    if (!cart) {
+      const error: Error = new Error('cart not found');
+      throw error;
+    }
+    return cart;
   }
 
   async createCart(userId: string): Promise<CartI> {
@@ -42,7 +55,7 @@ export class CartsAtlasDAO implements CartBaseClass {
     return cart;
   }
 
-  async deleteProduct(cartId: string, product: ProductCart): Promise<CartI> {
+  async deleteProducts(cartId: string, product: ProductCart): Promise<CartI> {
     const cart = await CartModel.findById(cartId);
     if (!cart) throw new Error("Cart not found");
 
@@ -58,5 +71,15 @@ export class CartsAtlasDAO implements CartBaseClass {
 
     await cart.save();
     return cart;
+  }
+
+  async clearCart(cartId: string) {
+    const cart = await CartModel.findById(cartId);
+    if (!cart) {
+      const error: Error = new Error('Cart not found');
+      throw error;
+    }
+    cart.products = [];
+    await cart.save()
   }
 }

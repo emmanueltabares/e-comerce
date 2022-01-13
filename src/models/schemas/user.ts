@@ -1,4 +1,4 @@
-import mongoose, { Schema } from 'mongoose';
+import { Schema } from 'mongoose';
 import { MongoDB } from '../../services/mongodb';
 import bcrypt from 'bcrypt';
 import { UserI } from '../../interfaces/users';

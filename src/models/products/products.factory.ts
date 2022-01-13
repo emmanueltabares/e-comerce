@@ -1,5 +1,3 @@
-/* import { ProductosMemDAO } from './DAOs/memory';
-import { ProductosFSDAO } from './DAOs/fs'; */
 import { ProductsMongoDAO } from '../products/DAOs/mongoDAO';
 import { Logger } from '../../services/logger';
 import path from 'path';

@@ -1,20 +1,31 @@
-import { CartAPI } from '../apis/carts';
-import { Request, Response, NextFunction } from 'express';
-import { UserI } from '../interfaces/users';
+import { NextFunction, Request, Response } from 'express';
 import { productsAPI } from '../apis/products';
+import { CartAPI } from '../apis/carts'
+import { ordersAPI } from '../apis/orders';
+import { UserI } from '../interfaces/users';
+import { Logger } from '../services/logger';
+import { ProductCartPopulate, productReference } from '../interfaces/carts';
+import { Items } from '../interfaces/orders';
 
 class Cart {
+
   async getCartByUser(req: Request, res: Response) {
-    const { id } = req.params;
-    const cart = await CartAPI.getCart(id);
+    
+     if (req.user) {
+      const user = req.user as any;
+      const userId = user._id; 
+    const cart = await CartAPI.getCart(userId);
     res.json(cart);
-  }
+  } 
+}
 
   async addProduct(req: Request, res: Response) {
-    const { user }: any = req.body;
-    const cart = await CartAPI.getCart(user._id);
+    if (req.user) {
+      const user = req.user as any;
+      const userId = user._id; 
+      const cart = await CartAPI.getCart(userId);
 
-    const { productId, productAmount } = req.body;
+      const { productId, productAmount } = req.body;
 
     if (!productId || !productAmount)
       return res.status(400).json({ msg: 'Invalid body parameters' });
@@ -31,14 +42,16 @@ class Cart {
     const updatedCart = await CartAPI.addProduct(
       cart._id,
       productId,
-      parseInt(productAmount)
+      parseInt(productAmount),
     );
     res.json({ msg: 'Product added', cart: updatedCart });
   }
-
-  async deleteProduct(req: Request, res: Response) {
-    const { user }: any = req.body;
-    const cart = await CartAPI.getCart(user._id);
+}
+  async deleteProducts(req: Request, res: Response) {
+    if (req.user) {
+      const user = req.user as any;
+      const userId = user._id; 
+      const cart = await CartAPI.getCart(userId);
 
     const { productId, productAmount } = req.body;
 
@@ -53,22 +66,52 @@ class Cart {
     if (parseInt(productAmount) < 0)
       return res.status(400).json({ msg: 'Invalid amount' });
 
-    const updatedCart = await CartAPI.deleteProduct(
+    const updatedCart = await CartAPI.deleteProducts(
       cart._id,
       productId,
       parseInt(productAmount)
     );
     res.json({ msg: 'Product deleted', cart: updatedCart });
+    }
   }
 
-  async deleteCart (req: Request, res: Response) {
-    const { id } = req.body;
-    const cart = await CartAPI.getCart(
-      id);
-  }
+  async postCarrito(req: Request, res: Response, next: NextFunction) {
+    try {
+      if (req.user) {
+        const user = req.user as UserI;
+        const { _id } = user;
 
-  async addCart(req: Request, res: Response)  {
-    throw new Error("Method not implemented");
+        const cart = await CartAPI.getCartPopulate(_id);
+
+        const { products } = cart;
+        if (products.length === 0) {
+          res.status(400).json({ msg: "No hay productos en el carrito"});
+        };
+
+        let items: any = [];
+
+        products.forEach((prod: any) => {
+          const produc: any = {
+            amount: prod.amount,
+            productId: prod._id,
+          };
+          items.push(produc);
+        });
+
+        const orderData: any = {
+          userId: _id,
+          items,
+
+        }; 
+        await ordersAPI.createOrden(orderData);
+        await CartAPI.clearCart(cart._id);
+
+        res.json({ msg: 'Su compra se realizo correctamente', data: orderData });
+      }
+     } catch (err: any) {
+      Logger.error(err);
+      next(err);
+    }
   }
 }
 

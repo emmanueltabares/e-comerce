@@ -28,10 +28,9 @@ export class ProductsMongoDAO /* implements BaseProductI */ {
        
     }
     async delete(id: string) {
-        return await ProductModel.findByIdAndDelete(id); 
+        await ProductModel.findByIdAndDelete(id); 
    }
     async update(id: string, newProductData: newProductI) {
         return await ProductModel.findByIdAndUpdate(id, newProductData);
-        
     }
 }

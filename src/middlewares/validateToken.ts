@@ -19,7 +19,7 @@ export const validateJWT = async (
   res: Response,
   next: NextFunction,
 ) => {
-  const token = req.header('Token');
+  const token = req.header('Authorization')?.split(" ")[1];
 
   if (!token) {
     return res.status(400).json({
@@ -28,21 +28,21 @@ export const validateJWT = async (
   }
 
   try {
-    const decoded: any = jwt.verify(token, Config.JWT_SECRET_KEY);
+    const payload: any = jwt.verify(token, Config.JWT_SECRET_KEY);
 
-    if (!decoded) {
+    if (!payload) {
       res.status(400).json({
         msg: 'Invalid token',
       });
     }
-    const usuario = await UserAPI.get(decoded.id as string);
+    const usuario = await UserAPI.get(payload.id as string);
 
     if (!usuario) {
       return res.status(401).json({
         msg: 'Unathorized.',
       });
     }
-    req.user = usuario;
+    req.user = usuario[0];
     next();
   } catch (error) {
     Logger.error(error);

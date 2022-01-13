@@ -5,7 +5,7 @@ export interface ProductI {
     name: string;
     cod: number;
     description: string;
-    photos: string;
+    photos: Array<string>;
     price: number;
     stock: number;  
 }
@@ -14,7 +14,7 @@ export interface newProductI {
     name: string;
     cod: number;
     description: string;
-    photo: string;
+    photos: Array<string>;
     price: number;
     stock: number; 
 }

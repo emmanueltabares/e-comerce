@@ -2,9 +2,6 @@ import { newProductI, ProductI } from '../interfaces/products';
 import { NoticiasFactoryDAO } from '../models/products/products.factory';
 import { TipoPersistencia } from '../models/products/products.factory';
 
-/**
- * Con esta variable elegimos el tipo de persistencia
- */
 const tipo = TipoPersistencia.MongoAtlas;
 
 class prodAPI {

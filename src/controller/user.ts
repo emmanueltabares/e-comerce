@@ -24,18 +24,6 @@ class User {
         data: newUser,
       });
     }
-  
-    async updateUser(req: Request, res: Response) {
-      const { id } = req.params;
-      const { body } = req.body;
-
-      const newUser = await UserAPI.update(id, body)
-
-      res.json({
-        msg: 'usuario actualizado',
-        data: newUser
-      });
-    }
     
     async deleteUser(req: Request, res: Response) {
       const { id } = req.params;

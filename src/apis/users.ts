@@ -3,9 +3,7 @@ import { UserFactoryDAO } from '../models/users/users.factory';
 import { TipoPersistencia } from '../models/users/users.factory';
 import { CartAPI } from './carts';
 /* import { CartAPI } from './carts'; */
-/**
- * Con esta variable elegimos el tipo de persistencia
- */
+
 const tipo = TipoPersistencia.MongoAtlas;
 
 class User {
@@ -27,15 +25,13 @@ class User {
     return newUser;
   }
 
-  async update(id: string, userData: NewUserI) {
-    const updatedUser = await this.users.update(id, userData);
-    return updatedUser;
-  }
 
-  //NOT FOUND
   async delete(id: string) {
+    /* await CartAPI.getCart(id)
+    await CartAPI. */
+
     await this.users.delete(id);
-    //Borrar carrito tambien
+    
   }
 
   async query(email: string): Promise<UserI> {

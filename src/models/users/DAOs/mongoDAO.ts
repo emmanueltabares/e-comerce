@@ -27,12 +27,8 @@ export class UsersMongoDAO {
     return newUser;
   }
 
-  async update(id: string, data: NewUserI) /* : Promise<UserI> */  {
-    return await UserModel.findByIdAndUpdate(id, data); 
-  }
-
   async delete(id: string) {
-    await UserModel.findOneAndRemove({ _id: id });
+    await UserModel.deleteOne({ _id: id });
   }
 
   async query(query: any): Promise<UserI> {
