@@ -1,0 +1,14 @@
+PORT='server port'
+HOST='server host'
+
+MONGO_SRV='your srv mongo db'
+
+SESSION_SECRET=
+SESSION_COOKIE_TIMEOUT_MIN=
+
+ETHEREAL_NAME= ' your name'
+ETHEREAL_EMAIL= 'your email'
+ETHEREAL_PASSWORD= 'password'
+
+TOKEN_KEEP_ALIVE='time of keep alive token'
+JWT_SECRET_KEY='secret key jwt'
