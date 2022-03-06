@@ -2,7 +2,6 @@ import { NewUserI, UserI, UserQuery } from '../interfaces/users';
 import { UserFactoryDAO } from '../models/users/users.factory';
 import { TipoPersistencia } from '../models/users/users.factory';
 import { CartAPI } from './carts';
-/* import { CartAPI } from './carts'; */
 
 const tipo = TipoPersistencia.MongoAtlas;
 
@@ -27,11 +26,7 @@ class User {
 
 
   async delete(id: string) {
-    /* await CartAPI.getCart(id)
-    await CartAPI. */
-
-    await this.users.delete(id);
-    
+    await this.users.delete(id); 
   }
 
   async query(email: string): Promise<UserI> {
